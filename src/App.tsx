@@ -31,16 +31,17 @@ import {
   ZoomIn,
   ZoomOut,
   Phone,
-  MessageCircle
+  MessageCircle,
+  Menu
 } from "lucide-react";
 import CyberBackground from "./components/CyberBackground";
 import Section from "./components/Section";
 import SkillBadge from "./components/SkillBadge";
-import ChatBot from "./components/ChatBot";
 
 export default function App() {
   const [isPdfOpen, setIsPdfOpen] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const technicalSkills = [
     { name: "Python", icon: <Terminal className="w-4 h-4" /> },
     { name: "AI / Machine Learning", icon: <Cpu className="w-4 h-4" /> },
@@ -63,15 +64,17 @@ export default function App() {
       <CyberBackground />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center bg-cyber-dark/50 backdrop-blur-lg border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center bg-cyber-dark/80 backdrop-blur-xl border-b border-white/5">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-display font-bold tracking-tighter text-glow"
+          className="text-xl font-display font-bold tracking-tighter text-glow z-50"
         >
           PRINCE<span className="text-cyber-blue">.AI</span>
         </motion.div>
-        <div className="hidden md:flex gap-8 text-sm font-medium text-white/60">
+        
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex gap-8 text-sm font-medium text-white/60">
           {["About", "Skills", "Academic", "What I Do", "Projects", "Vision", "Contact"].map((item) => (
             <a 
               key={item} 
@@ -82,12 +85,56 @@ export default function App() {
             </a>
           ))}
         </div>
-        <motion.button
-          whileTap={{ scale: 0.95 }}
-          className="px-5 py-2 bg-cyber-blue text-cyber-dark font-bold rounded-full text-sm hover:bg-white transition-colors"
+        
+        <div className="hidden lg:block">
+          <motion.a
+            href="#contact"
+            whileTap={{ scale: 0.95 }}
+            className="px-5 py-2 bg-cyber-blue text-cyber-dark font-bold rounded-full text-sm hover:bg-white transition-colors"
+          >
+            LET'S TALK
+          </motion.a>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className="lg:hidden z-50 text-white p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          LET'S TALK
-        </motion.button>
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="fixed inset-0 top-[72px] bg-cyber-dark/95 backdrop-blur-xl z-40 flex flex-col items-center pt-10 border-b border-white/10 lg:hidden"
+            >
+              <div className="flex flex-col gap-6 text-center text-lg font-medium text-white/80 w-full px-6">
+                {["About", "Skills", "Academic", "What I Do", "Projects", "Vision", "Contact"].map((item) => (
+                  <a 
+                    key={item} 
+                    href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="hover:text-cyber-blue transition-colors py-2 border-b border-white/5 w-full"
+                  >
+                    {item}
+                  </a>
+                ))}
+                <a
+                  href="#contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="mt-4 px-8 py-3 bg-cyber-blue text-cyber-dark font-bold rounded-full text-sm hover:bg-white transition-colors w-full"
+                >
+                  LET'S TALK
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
@@ -120,26 +167,34 @@ export default function App() {
             Building intelligent systems, trading algorithms, and automation frameworks to simplify real-world problems.
           </p>
 
-          <div className="flex flex-wrap gap-4">
-            <button
-              className="px-8 py-4 bg-white text-cyber-dark font-black rounded-xl flex items-center gap-2 group"
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <a
+              href="#projects"
+              className="px-8 py-4 bg-white text-cyber-dark font-black rounded-xl flex items-center justify-center gap-2 group w-full sm:w-auto"
             >
               VIEW PROJECTS
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button
-              className="px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors"
+            </a>
+            <a
+              href="#skills"
+              className="px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors flex justify-center items-center w-full sm:w-auto"
             >
               MY STRATEGIES
-            </button>
+            </a>
           </div>
         </motion.div>
       </section>
 
       {/* Intro Section */}
       <Section id="about">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="grid lg:grid-cols-2 gap-12 items-center"
+        >
+          <div className="order-2 lg:order-1">
             <h2 className="text-4xl font-bold mb-6 flex items-center gap-3">
               <span className="text-cyber-blue">01.</span> ABOUT ME
             </h2>
@@ -152,7 +207,7 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative order-1 lg:order-2 max-w-md mx-auto w-full">
             <div className="aspect-square glass-card p-8 flex flex-col justify-center items-center text-center group">
               <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 to-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
               <Bot className="w-20 h-20 text-cyber-blue mb-6 animate-bounce" />
@@ -165,7 +220,7 @@ export default function App() {
             <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-cyber-blue/30 z-30" />
             <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-2 border-l-2 border-cyber-pink/30 z-30" />
           </div>
-        </div>
+        </motion.div>
       </Section>
 
       {/* Skills Section */}
@@ -223,9 +278,15 @@ export default function App() {
 
       {/* Academic Credentials Section */}
       <Section id="academic">
-        <h2 className="text-4xl font-bold mb-12">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl font-bold mb-12"
+        >
           <span className="text-cyber-blue">03.</span> ACADEMIC CREDENTIALS
-        </h2>
+        </motion.h2>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Education Card */}
@@ -290,9 +351,15 @@ export default function App() {
 
       {/* What I Do Section */}
       <Section id="what-i-do">
-        <h2 className="text-4xl font-bold mb-16">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl font-bold mb-16"
+        >
           <span className="text-cyber-blue">04.</span> WHAT I DO
-        </h2>
+        </motion.h2>
         
         <motion.div 
           initial="hidden"
@@ -346,9 +413,15 @@ export default function App() {
 
       {/* Projects Section */}
       <Section id="projects">
-        <h2 className="text-4xl font-bold mb-16">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl font-bold mb-16"
+        >
           <span className="text-cyber-pink">05.</span> FEATURED PROJECTS
-        </h2>
+        </motion.h2>
 
         <div className="grid md:grid-cols-2 gap-8">
           <motion.div 
@@ -412,7 +485,13 @@ export default function App() {
       {/* Vision Statement */}
       <Section id="vision" className="relative overflow-hidden">
         <div className="absolute inset-0 bg-cyber-blue/5 blur-[100px] -z-10" />
-        <div className="max-w-4xl mx-auto text-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl mx-auto text-center"
+        >
           <Target className="w-16 h-16 text-cyber-blue mx-auto mb-8" />
           <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">
             "My goal is to build intelligent technology that works like a <span className="text-cyber-blue">personal assistant</span> for everyone."
@@ -420,45 +499,51 @@ export default function App() {
           <p className="text-xl text-white/60 italic">
             — Helping businesses, traders, and students grow faster using AI.
           </p>
-        </div>
+        </motion.div>
       </Section>
 
       {/* Contact Section */}
       <Section id="contact" className="pb-40">
-        <div className="glass-card p-12 md:p-20 relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-10 opacity-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="glass-card p-8 md:p-12 lg:p-20 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 p-10 opacity-10 hidden md:block">
             <Zap className="w-64 h-64 text-cyber-blue" />
           </div>
           
-          <div className="grid md:grid-cols-2 gap-12 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 relative z-10">
             <div>
-              <h2 className="text-5xl font-black mb-6">LET'S BUILD THE FUTURE.</h2>
+              <h2 className="text-4xl md:text-5xl font-black mb-6">LET'S BUILD THE FUTURE.</h2>
               <p className="text-white/60 text-lg mb-10">
                 Have a project in mind or want to discuss trading strategies? Drop me a message.
               </p>
               
               <div className="space-y-6">
-                <a href="mailto:develover@imprince.me" className="flex items-center gap-4 text-xl hover:text-cyber-blue transition-colors group">
-                  <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyber-blue/20">
-                    <Mail className="w-6 h-6" />
+                <a href="mailto:develover@imprince.me" className="flex items-center gap-4 text-lg md:text-xl hover:text-cyber-blue transition-colors group break-all">
+                  <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyber-blue/20">
+                    <Mail className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   develover@imprince.me
                 </a>
-                <a href="tel:+918252995548" className="flex items-center gap-4 text-xl hover:text-cyber-blue transition-colors group">
-                  <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyber-blue/20">
-                    <Phone className="w-6 h-6" />
+                <a href="tel:+918252995548" className="flex items-center gap-4 text-lg md:text-xl hover:text-cyber-blue transition-colors group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyber-blue/20">
+                    <Phone className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   +91 8252995548
                 </a>
-                <div className="flex items-center gap-4 text-xl">
-                  <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
-                    <MapPin className="w-6 h-6" />
+                <div className="flex items-center gap-4 text-lg md:text-xl">
+                  <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-white/5 flex items-center justify-center">
+                    <MapPin className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   Indian
                 </div>
-                <div className="flex items-center gap-4 text-xl">
-                  <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
-                    <Globe className="w-6 h-6" />
+                <div className="flex items-center gap-4 text-lg md:text-xl">
+                  <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-white/5 flex items-center justify-center">
+                    <Globe className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   Website: Coming Soon
                 </div>
@@ -469,23 +554,21 @@ export default function App() {
                   href="https://wa.me/918252995548" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#128C7E] transition-colors shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)]"
+                  className="inline-flex items-center justify-center gap-3 px-6 md:px-8 py-4 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#128C7E] transition-colors shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] w-full sm:w-auto text-sm md:text-base"
                 >
-                  <MessageCircle className="w-6 h-6" />
+                  <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
                   CHAT ON WHATSAPP
                 </a>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </Section>
 
       {/* Footer */}
       <footer className="py-10 border-t border-white/5 text-center text-white/30 text-sm">
         <p>© 2026 PRINCE KUSHWAHA. ALL RIGHTS RESERVED. BUILT WITH AI & PASSION.</p>
       </footer>
-
-      <ChatBot />
 
       {/* PDF Viewer Modal */}
       <AnimatePresence>

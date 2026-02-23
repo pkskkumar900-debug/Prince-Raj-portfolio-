@@ -29,15 +29,28 @@ If asked about things not in this context, politely steer the conversation back 
 `;
 
 export async function getChatResponse(message: string, history: { role: string, parts: { text: string }[] }[]) {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+  const ai = new GoogleGenAI({ apiKey: "AIzaSyAxF64I0LaSDWnesLDWRu1xqtP_vldd-yo" });
   const model = "gemini-3-flash-preview";
+
+  const validHistory = [];
+  let lastRole = "";
+  
+  for (const msg of history) {
+    if (msg.role === "model" && validHistory.length === 0) {
+      continue;
+    }
+    if (msg.role !== lastRole) {
+      validHistory.push(msg);
+      lastRole = msg.role;
+    }
+  }
 
   const chat = ai.chats.create({
     model,
     config: {
       systemInstruction: SYSTEM_INSTRUCTION,
     },
-    history: history,
+    history: validHistory,
   });
 
   const result = await chat.sendMessage({ message });
