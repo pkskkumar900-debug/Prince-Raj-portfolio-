@@ -13,6 +13,9 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-cyber-dark text-white font-sans selection:bg-cyber-blue/30 selection:text-cyber-blue;
     overflow-x: hidden;
@@ -47,7 +50,76 @@
   }
 
   .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl;
+    @apply bg-white/5 backdrop-blur-[10px] border border-white/20 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] transition-all duration-300;
+  }
+
+  @media (hover: hover) {
+    .glass-card:hover {
+      @apply border-cyber-blue/50 shadow-[0_0_30px_rgba(0,242,255,0.3),inset_0_0_20px_rgba(0,242,255,0.1)];
+      transform: translateY(-2px) scale(1.02);
+    }
+  }
+
+  .glass-card:active {
+    @apply border-cyber-blue/50 shadow-[0_0_30px_rgba(0,242,255,0.3),inset_0_0_20px_rgba(0,242,255,0.1)];
+    transform: translateY(-2px) scale(0.98);
+  }
+
+  .btn-glow {
+    @apply relative overflow-hidden;
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .btn-glow:hover {
+    box-shadow: 0 0 25px rgba(0, 242, 255, 0.7);
+  }
+
+  .whatsapp-pulse {
+    animation: heartPulse 2s infinite;
+  }
+
+  .card-pulse {
+    animation: cardPulse 3s infinite;
+  }
+
+  @keyframes cardPulse {
+    0% {
+      box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
+    }
+    100% {
+      box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+    }
+  }
+
+  @keyframes heartPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+    }
+    15% {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(37, 211, 102, 0.7);
+    }
+    30% {
+      transform: scale(1);
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+    }
+    45% {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(37, 211, 102, 0.7);
+    }
+    60% {
+      transform: scale(1);
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+    }
   }
 
   .markdown-body pre {

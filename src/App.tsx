@@ -32,7 +32,8 @@ import {
   ZoomOut,
   Phone,
   MessageCircle,
-  Menu
+  Menu,
+  Github
 } from "lucide-react";
 import CyberBackground from "./components/CyberBackground";
 import Section from "./components/Section";
@@ -90,7 +91,7 @@ export default function App() {
           <motion.a
             href="#contact"
             whileTap={{ scale: 0.95 }}
-            className="px-5 py-2 bg-cyber-blue text-cyber-dark font-bold rounded-full text-sm hover:bg-white transition-colors"
+            className="px-5 py-2 bg-cyber-blue text-cyber-dark font-bold rounded-full text-sm hover:bg-white transition-colors btn-glow"
           >
             LET'S TALK
           </motion.a>
@@ -127,7 +128,7 @@ export default function App() {
                 <a
                   href="#contact"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="mt-4 px-8 py-3 bg-cyber-blue text-cyber-dark font-bold rounded-full text-sm hover:bg-white transition-colors w-full"
+                  className="mt-4 px-8 py-3 bg-cyber-blue text-cyber-dark font-bold rounded-full text-sm hover:bg-white transition-colors w-full btn-glow"
                 >
                   LET'S TALK
                 </a>
@@ -170,7 +171,7 @@ export default function App() {
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <a
               href="#projects"
-              className="px-8 py-4 bg-white text-cyber-dark font-black rounded-xl flex items-center justify-center gap-2 group w-full sm:w-auto"
+              className="px-8 py-4 bg-cyber-blue text-cyber-dark font-black rounded-xl flex items-center justify-center gap-2 group w-full sm:w-auto btn-glow"
             >
               VIEW PROJECTS
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -200,7 +201,7 @@ export default function App() {
             </h2>
             <div className="space-y-6 text-lg text-white/70 leading-relaxed">
               <p>
-                Hi, I'm <span className="text-white font-semibold">Prince Kushwaha</span>. I bridge the gap between Artificial Intelligence and Financial Markets.
+                Hi, I'm <span className="text-white font-semibold">Prince Raj</span>. I bridge the gap between Artificial Intelligence and Financial Markets.
               </p>
               <p>
                 As an AI Developer and Professional Trader, I build agentic automation tools, intelligent personal assistants, and data-driven trading strategies. Currently advancing my expertise through a <span className="text-cyber-blue font-mono">BS in CSDA</span>, my mission is to develop real-world tech solutions that save time, automate decisions, and generate measurable impact.
@@ -225,9 +226,15 @@ export default function App() {
 
       {/* Skills Section */}
       <Section id="skills" className="bg-white/[0.02] border-y border-white/5">
-        <h2 className="text-4xl font-bold mb-12 text-center">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl font-bold mb-12 text-center"
+        >
           <span className="text-cyber-pink">02.</span> CORE EXPERTISE
-        </h2>
+        </motion.h2>
         
         <motion.div 
           initial="hidden"
@@ -243,16 +250,23 @@ export default function App() {
               hidden: { opacity: 0, x: -20 },
               visible: { opacity: 1, x: 0 }
             }}
-            className="glass-card p-8"
+            className="glass-card p-8 card-pulse relative overflow-hidden group border-cyber-blue/30 hover:border-cyber-blue/60 transition-colors"
           >
-            <div className="flex items-center gap-3 mb-8">
-              <Cpu className="text-cyber-blue w-6 h-6" />
-              <h3 className="text-xl font-bold uppercase tracking-widest">Technical Stack</h3>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {technicalSkills.map(skill => (
-                <SkillBadge key={skill.name} name={skill.name} category="tech" icon={skill.icon} />
-              ))}
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyber-blue/20 rounded-full blur-3xl group-hover:bg-cyber-blue/40 transition-all duration-500 animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-cyber-blue/50 rounded-full blur-md animate-pulse" />
+                  <Cpu className="text-cyber-blue w-6 h-6 relative z-10" />
+                </div>
+                <h3 className="text-xl font-bold uppercase tracking-widest text-white group-hover:text-cyber-blue transition-colors">Technical Stack</h3>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {technicalSkills.map(skill => (
+                  <SkillBadge key={skill.name} name={skill.name} category="tech" icon={skill.icon} />
+                ))}
+              </div>
             </div>
           </motion.div>
 
@@ -261,16 +275,23 @@ export default function App() {
               hidden: { opacity: 0, x: 20 },
               visible: { opacity: 1, x: 0 }
             }}
-            className="glass-card p-8"
+            className="glass-card p-8 card-pulse relative overflow-hidden group border-cyber-pink/30 hover:border-cyber-pink/60 transition-colors"
           >
-            <div className="flex items-center gap-3 mb-8">
-              <TrendingUp className="text-cyber-pink w-6 h-6" />
-              <h3 className="text-xl font-bold uppercase tracking-widest">Trading & Finance</h3>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {tradingSkills.map(skill => (
-                <SkillBadge key={skill.name} name={skill.name} category="trading" icon={skill.icon} />
-              ))}
+            <div className="absolute -top-20 -left-20 w-40 h-40 bg-cyber-pink/20 rounded-full blur-3xl group-hover:bg-cyber-pink/40 transition-all duration-500 animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-bl from-cyber-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-cyber-pink/50 rounded-full blur-md animate-pulse" />
+                  <TrendingUp className="text-cyber-pink w-6 h-6 relative z-10" />
+                </div>
+                <h3 className="text-xl font-bold uppercase tracking-widest text-white group-hover:text-cyber-pink transition-colors">Trading & Finance</h3>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {tradingSkills.map(skill => (
+                  <SkillBadge key={skill.name} name={skill.name} category="trading" icon={skill.icon} />
+                ))}
+              </div>
             </div>
           </motion.div>
         </motion.div>
@@ -285,7 +306,7 @@ export default function App() {
           transition={{ duration: 0.5 }}
           className="text-4xl font-bold mb-12"
         >
-          <span className="text-cyber-blue">03.</span> ACADEMIC CREDENTIALS
+          <span className="text-cyber-blue">03.</span> ACADEMIC EXCELLENCE
         </motion.h2>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -294,20 +315,25 @@ export default function App() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-1 glass-card p-8 border-cyber-blue/20 bg-cyber-blue/5"
+            className="lg:col-span-1 glass-card p-8 border-cyber-blue/30 bg-gradient-to-br from-cyber-dark to-cyber-blue/5 shadow-[0_0_30px_rgba(0,242,255,0.1)] card-pulse relative overflow-hidden group"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <GraduationCap className="text-cyber-blue w-8 h-8" />
-              <h3 className="text-2xl font-bold uppercase tracking-tight">Education</h3>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-lg font-bold text-white">BS in Computer Science & Data Analytics (CSDA)</h4>
-                <p className="text-cyber-blue font-mono text-sm">IIT PATNA | Currently Pursuing</p>
+            <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <GraduationCap className="text-cyber-blue w-8 h-8 group-hover:scale-110 transition-transform" />
+                <h3 className="text-2xl font-bold uppercase tracking-tight">Education</h3>
               </div>
-              <p className="text-white/60 leading-relaxed">
-                Advancing expertise in data science, algorithmic trading, and AI systems through the rigorous curriculum at IIT Patna.
-              </p>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-xl font-bold text-white mb-2 group-hover:text-cyber-blue transition-colors">BS in Computer Science & Data Analytics</h4>
+                  <div className="inline-block px-3 py-1 bg-cyber-blue/10 border border-cyber-blue/30 rounded-md">
+                    <p className="text-cyber-blue font-mono text-sm font-bold tracking-widest">IIT PATNA</p>
+                  </div>
+                </div>
+                <p className="text-white/70 leading-relaxed mt-4">
+                  Advancing expertise in data science, algorithmic trading, and AI systems through the prestigious and rigorous curriculum at the Indian Institute of Technology Patna.
+                </p>
+              </div>
             </div>
           </motion.div>
 
@@ -332,16 +358,19 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="glass-card p-5 hover:bg-white/10 transition-all group border-white/5"
+                className="glass-card p-5 hover:bg-white/10 transition-all group border-white/5 hover:border-cyber-pink/30 hover:shadow-[0_0_20px_rgba(255,0,255,0.2)] relative overflow-hidden"
               >
-                <div className="flex justify-between items-start mb-3">
-                  <Award className="w-5 h-5 text-cyber-pink group-hover:scale-110 transition-transform" />
-                  <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-cyber-blue transition-colors" />
-                </div>
-                <h4 className="font-bold text-sm leading-tight mb-1 group-hover:text-cyber-blue transition-colors">{cert.title}</h4>
-                <div className="flex justify-between items-center mt-auto">
-                  <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold">{cert.issuer}</span>
-                  <span className="text-[10px] font-mono text-cyber-blue/60">{cert.date}</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-cyber-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-3">
+                    <Award className="w-5 h-5 text-cyber-pink group-hover:scale-110 transition-transform" />
+                    <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-cyber-blue transition-colors" />
+                  </div>
+                  <h4 className="font-bold text-sm leading-tight mb-1 group-hover:text-cyber-blue transition-colors">{cert.title}</h4>
+                  <div className="flex justify-between items-center mt-auto">
+                    <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold">{cert.issuer}</span>
+                    <span className="text-[10px] font-mono text-cyber-blue/60">{cert.date}</span>
+                  </div>
                 </div>
               </motion.a>
             ))}
@@ -397,13 +426,14 @@ export default function App() {
                 visible: { opacity: 1, y: 0 }
               }}
               whileHover={{ y: -10 }}
-              className="glass-card p-10 group cursor-default"
+              className="glass-card p-10 group cursor-default card-pulse relative overflow-hidden"
             >
-              <div className={`${item.color} mb-6 group-hover:scale-110 transition-transform`}>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className={`${item.color} mb-6 group-hover:scale-110 transition-transform relative z-10`}>
                 {item.icon}
               </div>
-              <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-              <p className="text-white/50 leading-relaxed">
+              <h3 className="text-2xl font-bold mb-4 relative z-10">{item.title}</h3>
+              <p className="text-white/50 leading-relaxed relative z-10">
                 {item.desc}
               </p>
             </motion.div>
@@ -523,11 +553,11 @@ export default function App() {
               </p>
               
               <div className="space-y-6">
-                <a href="mailto:develover@imprince.me" className="flex items-center gap-4 text-lg md:text-xl hover:text-cyber-blue transition-colors group break-all">
+                <a href="mailto:developer@imprince.me" className="flex items-center gap-4 text-lg md:text-xl hover:text-cyber-blue transition-colors group break-all">
                   <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyber-blue/20">
                     <Mail className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
-                  develover@imprince.me
+                  developer@imprince.me
                 </a>
                 <a href="tel:+918252995548" className="flex items-center gap-4 text-lg md:text-xl hover:text-cyber-blue transition-colors group">
                   <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyber-blue/20">
@@ -554,10 +584,11 @@ export default function App() {
                   href="https://wa.me/918252995548" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 px-6 md:px-8 py-4 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#128C7E] transition-colors shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] w-full sm:w-auto text-sm md:text-base"
+                  className="inline-flex items-center justify-center gap-3 px-6 md:px-8 py-4 bg-cyber-dark border border-[#25D366]/50 text-[#25D366] font-bold rounded-xl hover:bg-[#25D366]/10 transition-all shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_40px_rgba(37,211,102,0.8)] w-full sm:w-auto text-sm md:text-base relative overflow-hidden group whatsapp-pulse"
                 >
+                  <div className="absolute inset-0 bg-[#25D366]/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
-                  CHAT ON WHATSAPP
+                  <span className="relative z-10">CHAT ON WHATSAPP</span>
                 </a>
               </div>
             </div>
@@ -566,8 +597,19 @@ export default function App() {
       </Section>
 
       {/* Footer */}
-      <footer className="py-10 border-t border-white/5 text-center text-white/30 text-sm">
-        <p>© 2026 PRINCE KUSHWAHA. ALL RIGHTS RESERVED. BUILT WITH AI & PASSION.</p>
+      <footer className="py-12 border-t border-white/5 text-center text-white/30 text-sm relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-cyber-blue/5 to-transparent -z-10" />
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-8">
+          <div className="flex items-center gap-6">
+            <a href="mailto:developer@imprince.me" className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/5 hover:bg-cyber-blue/20 transition-all border border-white/10 hover:border-cyber-blue/50 group shadow-[0_0_15px_rgba(0,242,255,0)] hover:shadow-[0_0_25px_rgba(0,242,255,0.4)] animate-pulse" title="developer@imprince.me">
+              <Mail className="w-6 h-6 text-white/80 group-hover:text-cyber-blue group-hover:animate-bounce" />
+            </a>
+            <a href="https://github.com/pkskkumar900-debug" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/5 hover:bg-cyber-pink/20 transition-all border border-white/10 hover:border-cyber-pink/50 group shadow-[0_0_15px_rgba(255,0,255,0)] hover:shadow-[0_0_25px_rgba(255,0,255,0.4)] animate-pulse" title="GitHub Profile">
+              <Github className="w-6 h-6 text-white/80 group-hover:text-cyber-pink group-hover:animate-bounce" />
+            </a>
+          </div>
+          <p className="font-mono tracking-widest uppercase text-xs opacity-50">© 2026 PRINCE RAJ. ALL RIGHTS RESERVED. BUILT WITH AI & PASSION.</p>
+        </div>
       </footer>
 
       {/* PDF Viewer Modal */}
@@ -733,7 +775,7 @@ export default function App() {
                       <h3 className="text-2xl font-bold border-l-4 border-cyber-blue pl-4 text-white">5. Team Roles</h3>
                       <ul className="space-y-3 text-sm">
                         <li className="bg-white/5 p-3 rounded-lg border border-white/10">
-                          <strong className="text-cyber-blue block">Prince Kushwaha</strong>
+                          <strong className="text-cyber-blue block">Prince Raj</strong>
                           Founder & AI Lead (Backend, AI integration)
                         </li>
                         <li className="bg-white/5 p-3 rounded-lg border border-white/10">
@@ -785,7 +827,7 @@ export default function App() {
                   </div>
                   
                   <div className="text-center pt-8 border-t border-white/10 text-xs font-mono text-white/40">
-                    <p>Generated by Prince Kushwaha | © 2026 NexacoreAi - CONFIDENTIAL</p>
+                    <p>Generated by Prince Raj | © 2026 NexacoreAi - CONFIDENTIAL</p>
                   </div>
                 </div>
               </div>
