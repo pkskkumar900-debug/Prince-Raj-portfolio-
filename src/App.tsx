@@ -33,7 +33,13 @@ import {
   Phone,
   MessageCircle,
   Menu,
-  Github
+  Github,
+  Building2,
+  Calendar,
+  Brain,
+  Database,
+  Code2,
+  Binary
 } from "lucide-react";
 import CyberBackground from "./components/CyberBackground";
 import Section from "./components/Section";
@@ -252,7 +258,7 @@ export default function App() {
             }}
             className="glass-card p-8 card-pulse relative overflow-hidden group border-cyber-blue/30 hover:border-cyber-blue/60 transition-colors"
           >
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyber-blue/20 rounded-full blur-3xl group-hover:bg-cyber-blue/40 transition-all duration-500 animate-pulse" />
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyber-blue/20 rounded-full blur-3xl group-hover:bg-cyber-blue/40 transition-colors duration-500 animate-pulse" />
             <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-8">
@@ -277,7 +283,7 @@ export default function App() {
             }}
             className="glass-card p-8 card-pulse relative overflow-hidden group border-cyber-pink/30 hover:border-cyber-pink/60 transition-colors"
           >
-            <div className="absolute -top-20 -left-20 w-40 h-40 bg-cyber-pink/20 rounded-full blur-3xl group-hover:bg-cyber-pink/40 transition-all duration-500 animate-pulse" />
+            <div className="absolute -top-20 -left-20 w-40 h-40 bg-cyber-pink/20 rounded-full blur-3xl group-hover:bg-cyber-pink/40 transition-colors duration-500 animate-pulse" />
             <div className="absolute inset-0 bg-gradient-to-bl from-cyber-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-8">
@@ -294,6 +300,51 @@ export default function App() {
               </div>
             </div>
           </motion.div>
+
+          {/* 3D Animated Tech Logos */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            className="md:col-span-2 mt-4 flex flex-wrap justify-center items-center gap-8 md:gap-16 p-10 glass-card border-white/10 bg-slate-900/20"
+            style={{ perspective: "1000px" }}
+          >
+            {[
+              { name: "Python", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg", delay: "0s" },
+              { name: "PyTorch", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg", delay: "0.5s" },
+              { name: "TensorFlow", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg", delay: "1s" },
+              { name: "React", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg", delay: "1.5s" },
+              { name: "Docker", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg", delay: "2s" },
+              { name: "AWS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", delay: "2.5s" },
+              { name: "PostgreSQL", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg", delay: "3s" },
+              { name: "C++", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg", delay: "3.5s" }
+            ].map((logo, i) => (
+              <div 
+                key={logo.name} 
+                className={`relative group cursor-pointer flex justify-center ${i % 2 === 0 ? 'animate-float-3d' : 'animate-float-3d-reverse'}`}
+                style={{ animationDelay: logo.delay }}
+              >
+                {/* Interactive Hover Popup (Tooltip) */}
+                <div className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 opacity-0 translate-y-4 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out z-50">
+                  <div className="relative">
+                    <div className="bg-slate-900/90 backdrop-blur-xl border border-cyber-blue/50 text-white text-xs md:text-sm font-bold tracking-widest px-4 py-2 rounded-xl shadow-[0_0_20px_rgba(56,189,248,0.4)] whitespace-nowrap">
+                      {logo.name}
+                    </div>
+                    {/* Tooltip Arrow */}
+                    <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900/90 border-b border-r border-cyber-blue/50 transform rotate-45"></div>
+                  </div>
+                </div>
+
+                <div className="absolute inset-0 bg-cyber-blue/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <img 
+                  src={logo.url} 
+                  alt={logo.name} 
+                  className="w-14 h-14 md:w-20 md:h-20 object-contain logo-3d relative z-10"
+                />
+              </div>
+            ))}
+          </motion.div>
         </motion.div>
       </Section>
 
@@ -309,30 +360,74 @@ export default function App() {
           <span className="text-cyber-blue">03.</span> ACADEMIC EXCELLENCE
         </motion.h2>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8" style={{ perspective: "1500px" }}>
           {/* Education Card */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-1 glass-card p-8 border-cyber-blue/30 bg-gradient-to-br from-cyber-dark to-cyber-blue/5 shadow-[0_0_30px_rgba(0,242,255,0.1)] card-pulse relative overflow-hidden group"
+            className="lg:col-span-1 p-8 bg-slate-900/40 backdrop-blur-[15px] border-[0.5px] border-white/15 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] card-pulse relative overflow-hidden group flex flex-col transition-all duration-500 hover:bg-slate-900/50 hover:border-white/20 card-3d-glow"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-6">
-                <GraduationCap className="text-cyber-blue w-8 h-8 group-hover:scale-110 transition-transform" />
-                <h3 className="text-2xl font-bold uppercase tracking-tight">Education</h3>
+            {/* Animated Background Elements */}
+            <div className="absolute -top-32 -right-32 w-64 h-64 bg-cyber-blue/20 rounded-full blur-[80px] group-hover:bg-cyber-blue/30 transition-colors duration-700 animate-pulse" />
+            <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-cyber-pink/10 rounded-full blur-[80px] group-hover:bg-cyber-pink/20 transition-colors duration-700 animate-pulse delay-1000" />
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] mix-blend-overlay" />
+            <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            <div className="relative z-10 h-full flex flex-col">
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-cyber-blue/50 rounded-full blur-md animate-pulse" />
+                    <div className="p-3 bg-cyber-dark/80 border border-cyber-blue/30 rounded-xl relative z-10 group-hover:scale-110 transition-transform duration-500">
+                      <GraduationCap className="text-cyber-blue w-6 h-6" />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">Education</h3>
+                </div>
+                <div className="px-3 py-1 rounded-full bg-cyber-blue/10 border border-cyber-blue/30 flex items-center gap-2 animate-pulse shadow-[0_0_15px_rgba(56,189,248,0.4)]">
+                  <div className="w-2 h-2 rounded-full bg-cyber-blue shadow-[0_0_10px_rgba(56,189,248,0.8)]" />
+                  <span className="text-xs font-mono text-cyber-blue font-bold tracking-widest">ACTIVE</span>
+                </div>
               </div>
-              <div className="space-y-4">
+
+              <div className="space-y-6 flex-1 flex flex-col">
                 <div>
-                  <h4 className="text-xl font-bold text-white mb-2 group-hover:text-cyber-blue transition-colors">BS in Computer Science & Data Analytics</h4>
-                  <div className="inline-block px-3 py-1 bg-cyber-blue/10 border border-cyber-blue/30 rounded-md">
-                    <p className="text-cyber-blue font-mono text-sm font-bold tracking-widest">IIT PATNA</p>
+                  <h4 className="text-2xl font-bold text-white mb-4 group-hover:text-cyber-blue transition-colors duration-300 leading-tight">BS in Computer Science & Data Analytics</h4>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg group-hover:border-cyber-blue/30 transition-colors shadow-[0_0_15px_rgba(56,189,248,0.2)] group-hover:shadow-[0_0_20px_rgba(56,189,248,0.4)]">
+                      <Building2 className="w-4 h-4 text-cyber-blue" />
+                      <p className="text-white font-mono text-sm font-bold tracking-widest">IIT PATNA</p>
+                    </div>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg group-hover:border-cyber-pink/30 transition-colors shadow-inner">
+                      <Calendar className="w-4 h-4 text-cyber-pink" />
+                      <p className="text-white/70 font-mono text-sm tracking-wider">2026 - 2030</p>
+                    </div>
                   </div>
                 </div>
-                <p className="text-white/70 leading-relaxed mt-4">
-                  Advancing expertise in data science, algorithmic trading, and AI systems through the prestigious and rigorous curriculum at the Indian Institute of Technology Patna.
+
+                <p className="text-white/70 leading-relaxed text-sm md:text-base">
+                  Acquiring deep technical expertise in data-driven decision making, complex algorithm design, and scalable AI infrastructure at the prestigious Indian Institute of Technology Patna.
                 </p>
+
+                <div className="pt-6 border-t border-white/10 mt-auto">
+                  <h5 className="text-xs font-mono text-white/40 uppercase tracking-widest mb-4">Core Focus Areas</h5>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { icon: <Brain className="w-3 h-3" />, text: "Machine Learning" },
+                      { icon: <BarChart3 className="w-3 h-3" />, text: "Statistical Analysis" },
+                      { icon: <Database className="w-3 h-3" />, text: "Big Data Engineering" },
+                      { icon: <Binary className="w-3 h-3" />, text: "Computational Mathematics" }
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-sm text-white/60 group-hover:text-white/90 transition-colors">
+                        <div className="p-1.5 rounded-md bg-white/5 text-cyber-blue border border-white/5 group-hover:border-cyber-blue/30 transition-colors">
+                          {item.icon}
+                        </div>
+                        <span className="font-medium">{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -358,7 +453,7 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="glass-card p-5 hover:bg-white/10 transition-all group border-white/5 hover:border-cyber-pink/30 hover:shadow-[0_0_20px_rgba(255,0,255,0.2)] relative overflow-hidden"
+                className="glass-card p-5 hover:bg-white/10 transition-all group border-white/5 hover:border-cyber-pink/30 hover:shadow-[0_0_20px_rgba(129,140,248,0.2)] relative overflow-hidden card-3d-glow-pink"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-cyber-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
@@ -474,7 +569,7 @@ export default function App() {
                 <div className="p-3 rounded-xl bg-cyber-dark/80 backdrop-blur-md border border-cyber-blue/20 shadow-lg">
                   <Globe className="w-8 h-8 text-cyber-blue" />
                 </div>
-                <span className="px-3 py-1 rounded-full bg-cyber-blue/10 border border-cyber-blue/20 text-cyber-blue text-[10px] font-bold tracking-widest uppercase animate-pulse shadow-[0_0_15px_rgba(0,242,255,0.3)] backdrop-blur-md mt-2">
+                <span className="px-3 py-1 rounded-full bg-cyber-blue/10 border border-cyber-blue/20 text-cyber-blue text-[10px] font-bold tracking-widest uppercase animate-pulse shadow-[0_0_15px_rgba(56,189,248,0.3)] backdrop-blur-md mt-2">
                   IN DEVELOPMENT STAGE
                 </span>
               </div>
@@ -601,10 +696,10 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-t from-cyber-blue/5 to-transparent -z-10" />
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-8">
           <div className="flex items-center gap-6">
-            <a href="mailto:developer@imprince.me" className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/5 hover:bg-cyber-blue/20 transition-all border border-white/10 hover:border-cyber-blue/50 group shadow-[0_0_15px_rgba(0,242,255,0)] hover:shadow-[0_0_25px_rgba(0,242,255,0.4)] animate-pulse" title="developer@imprince.me">
+            <a href="mailto:developer@imprince.me" className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/5 hover:bg-cyber-blue/20 transition-all border border-white/10 hover:border-cyber-blue/50 group shadow-[0_0_15px_rgba(56,189,248,0)] hover:shadow-[0_0_25px_rgba(56,189,248,0.4)] animate-pulse" title="developer@imprince.me">
               <Mail className="w-6 h-6 text-white/80 group-hover:text-cyber-blue group-hover:animate-bounce" />
             </a>
-            <a href="https://github.com/pkskkumar900-debug" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/5 hover:bg-cyber-pink/20 transition-all border border-white/10 hover:border-cyber-pink/50 group shadow-[0_0_15px_rgba(255,0,255,0)] hover:shadow-[0_0_25px_rgba(255,0,255,0.4)] animate-pulse" title="GitHub Profile">
+            <a href="https://github.com/pkskkumar900-debug" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/5 hover:bg-cyber-pink/20 transition-all border border-white/10 hover:border-cyber-pink/50 group shadow-[0_0_15px_rgba(129,140,248,0)] hover:shadow-[0_0_25px_rgba(129,140,248,0.4)] animate-pulse" title="GitHub Profile">
               <Github className="w-6 h-6 text-white/80 group-hover:text-cyber-pink group-hover:animate-bounce" />
             </a>
           </div>
@@ -625,7 +720,7 @@ export default function App() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="relative w-full max-w-5xl h-full glass-card border-cyber-blue/30 flex flex-col overflow-hidden shadow-[0_0_50px_rgba(0,242,255,0.1)]"
+              className="relative w-full max-w-5xl h-full glass-card border-cyber-blue/30 flex flex-col overflow-hidden shadow-[0_0_50px_rgba(56,189,248,0.1)]"
             >
               {/* Modal Header */}
               <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
