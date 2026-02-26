@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Geist:wght@300;500;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Geist", "Inter", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
   --color-cyber-blue: #38bdf8;
   --color-cyber-pink: #818cf8;
-  --color-cyber-dark: #030303;
-  --color-cyber-gray: #121212;
+  --color-cyber-dark: #000000;
+  --color-cyber-gray: #0a0a0a;
 }
 
 @layer base {
@@ -37,9 +37,20 @@
 
 @layer utilities {
   .cyber-grid {
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background-image: linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  }
+
+  @keyframes gridMove3D {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 50px; }
+  }
+
+  .animate-grid-3d {
+    animation: gridMove3D 2s linear infinite;
   }
 
   .text-glow {
@@ -51,22 +62,34 @@
   }
 
   .glass-card {
-    @apply bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)];
+    @apply bg-white/[0.02] backdrop-blur-2xl border border-white/[0.05] rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.6)];
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
     will-change: transform, box-shadow;
+  }
+
+  .bento-card {
+    @apply relative overflow-hidden bg-white/[0.02] backdrop-blur-2xl border border-white/[0.05] rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.6)];
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+    will-change: transform, box-shadow;
+  }
+
+  .bento-card:hover {
+    @apply border-white/[0.1] bg-white/[0.04];
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.1);
+    transform: translateY(-4px) scale(1.01);
   }
 
   @media (hover: hover) {
     .glass-card:hover {
       @apply border-white/[0.1] bg-white/[0.04];
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(56, 189, 248, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.1);
       transform: translateY(-4px) scale(1.01);
     }
   }
 
-  .glass-card:active {
+  .glass-card:active, .bento-card:active {
     @apply border-white/[0.1] bg-white/[0.04];
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.1);
     transform: translateY(-2px) scale(0.99);
   }
 
@@ -78,6 +101,55 @@
   
   .btn-glow:hover {
     box-shadow: 0 0 25px rgba(0, 242, 255, 0.7);
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.8), inset 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+  }
+
+  .btn-premium {
+    @apply relative overflow-hidden;
+    animation: pulseGlow 3s infinite;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .btn-premium:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 0 40px rgba(56, 189, 248, 1), inset 0 0 25px rgba(56, 189, 248, 0.6);
+  }
+
+  @keyframes pulseGlowPink {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(129, 140, 248, 0.2), inset 0 0 10px rgba(129, 140, 248, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(129, 140, 248, 0.5), inset 0 0 15px rgba(129, 140, 248, 0.3);
+    }
+  }
+
+  .btn-premium-pink {
+    @apply relative overflow-hidden;
+    animation: pulseGlowPink 3s infinite;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .btn-premium-pink:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 0 35px rgba(129, 140, 248, 0.8), inset 0 0 20px rgba(129, 140, 248, 0.5);
   }
 
   .whatsapp-pulse {
@@ -101,6 +173,15 @@
     }
   }
 
+  @keyframes border-beam {
+    100% {
+      offset-distance: 100%;
+    }
+  }
+
+  .animate-border-beam {
+    animation: border-beam var(--duration) infinite linear;
+  }
   @keyframes float3d {
     0% { transform: translateY(0) rotateX(10deg) rotateY(-10deg); }
     50% { transform: translateY(-15px) rotateX(15deg) rotateY(-5deg); }

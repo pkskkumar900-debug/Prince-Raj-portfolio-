@@ -2,12 +2,32 @@ import { motion } from "motion/react";
 
 export default function CyberBackground() {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-      {/* Base Grid */}
-      <div className="absolute inset-0 cyber-grid opacity-20" />
+    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-cyber-dark" style={{ perspective: '1000px' }}>
+      {/* 3D Animated Floor Grid */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div 
+          className="absolute w-[200vw] h-[200vh] cyber-grid opacity-30 animate-grid-3d"
+          style={{
+            transform: 'rotateX(60deg) translateY(-100px) translateZ(-200px)',
+            transformOrigin: 'top center'
+          }}
+        />
+      </div>
+
+      {/* 3D Animated Ceiling Grid */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div 
+          className="absolute w-[200vw] h-[200vh] cyber-grid opacity-10 animate-grid-3d"
+          style={{
+            transform: 'rotateX(-60deg) translateY(100px) translateZ(-200px)',
+            transformOrigin: 'bottom center'
+          }}
+        />
+      </div>
       
-      {/* Radial Gradient Overlay */}
-      <div className="absolute inset-0 bg-radial-[at_50%_50%] from-transparent via-cyber-dark/50 to-cyber-dark" />
+      {/* Perspective Overlay for 3D effect */}
+      <div className="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-cyber-dark opacity-90" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#000_80%)] opacity-90" />
 
       {/* Animated Orbs */}
       <motion.div

@@ -44,6 +44,11 @@ import {
 import CyberBackground from "./components/CyberBackground";
 import Section from "./components/Section";
 import SkillBadge from "./components/SkillBadge";
+import MouseGlow from "./components/MouseGlow";
+import Hero3D from "./components/Hero3D";
+import { BorderBeam } from "./components/BorderBeam";
+
+import { ReactLenis } from 'lenis/react';
 
 export default function App() {
   const [isPdfOpen, setIsPdfOpen] = useState(false);
@@ -69,6 +74,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen">
       <CyberBackground />
+      <MouseGlow />
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center bg-cyber-dark/80 backdrop-blur-xl border-b border-white/5">
@@ -174,19 +180,25 @@ export default function App() {
             Building intelligent systems, trading algorithms, and automation frameworks to simplify real-world problems.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto mt-4">
             <a
               href="#projects"
-              className="px-8 py-4 bg-cyber-blue text-cyber-dark font-black rounded-xl flex items-center justify-center gap-2 group w-full sm:w-auto btn-glow"
+              className="px-8 py-4 bg-cyber-blue text-cyber-dark font-black rounded-xl flex items-center justify-center gap-2 group w-full sm:w-auto btn-premium"
             >
-              VIEW PROJECTS
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shimmer" />
+              <span className="relative flex items-center gap-2">
+                VIEW PROJECTS
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
             </a>
             <a
               href="#skills"
-              className="px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors flex justify-center items-center w-full sm:w-auto"
+              className="px-8 py-4 bg-transparent border border-cyber-pink/50 text-white font-bold rounded-xl flex justify-center items-center w-full sm:w-auto group btn-premium-pink"
             >
-              MY STRATEGIES
+              <span className="absolute inset-0 w-full h-full bg-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="relative z-10 flex items-center gap-2 tracking-wide">
+                MY STRATEGIES
+              </span>
             </a>
           </div>
         </motion.div>
@@ -215,7 +227,8 @@ export default function App() {
             </div>
           </div>
           <div className="relative order-1 lg:order-2 max-w-md mx-auto w-full">
-            <div className="aspect-square glass-card p-8 flex flex-col justify-center items-center text-center group">
+            <div className="aspect-square bento-card p-8 flex flex-col justify-center items-center text-center group">
+              <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 to-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
               <Bot className="w-20 h-20 text-cyber-blue mb-6 animate-bounce" />
               <h3 className="text-2xl font-bold mb-2">The Vision</h3>
@@ -256,8 +269,9 @@ export default function App() {
               hidden: { opacity: 0, x: -20 },
               visible: { opacity: 1, x: 0 }
             }}
-            className="glass-card p-8 card-pulse relative overflow-hidden group border-cyber-blue/30 hover:border-cyber-blue/60 transition-colors"
+            className="bento-card p-8 card-pulse relative overflow-hidden group border-cyber-blue/30 hover:border-cyber-blue/60 transition-colors"
           >
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyber-blue/20 rounded-full blur-3xl group-hover:bg-cyber-blue/40 transition-colors duration-500 animate-pulse" />
             <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
@@ -281,17 +295,32 @@ export default function App() {
               hidden: { opacity: 0, x: 20 },
               visible: { opacity: 1, x: 0 }
             }}
-            className="glass-card p-8 card-pulse relative overflow-hidden group border-cyber-pink/30 hover:border-cyber-pink/60 transition-colors"
+            className="bento-card p-8 card-pulse relative overflow-hidden group border-cyber-pink/30 hover:border-cyber-pink/60 transition-colors"
           >
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="#818cf8" colorTo="#38bdf8" />
             <div className="absolute -top-20 -left-20 w-40 h-40 bg-cyber-pink/20 rounded-full blur-3xl group-hover:bg-cyber-pink/40 transition-colors duration-500 animate-pulse" />
             <div className="absolute inset-0 bg-gradient-to-bl from-cyber-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-cyber-pink/50 rounded-full blur-md animate-pulse" />
-                  <TrendingUp className="text-cyber-pink w-6 h-6 relative z-10" />
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-cyber-pink/50 rounded-full blur-md animate-pulse" />
+                    <TrendingUp className="text-cyber-pink w-6 h-6 relative z-10" />
+                  </div>
+                  <h3 className="text-xl font-bold uppercase tracking-widest text-white group-hover:text-cyber-pink transition-colors">Trading & Finance</h3>
                 </div>
-                <h3 className="text-xl font-bold uppercase tracking-widest text-white group-hover:text-cyber-pink transition-colors">Trading & Finance</h3>
+                {/* Mini Chart Visualization */}
+                <div className="flex items-end gap-1 h-8 opacity-60 group-hover:opacity-100 transition-opacity">
+                  {[40, 70, 45, 90, 65, 100].map((height, i) => (
+                    <motion.div 
+                      key={i}
+                      initial={{ height: 0 }}
+                      whileInView={{ height: `${height}%` }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                      className="w-1.5 bg-cyber-pink rounded-t-sm"
+                    />
+                  ))}
+                </div>
               </div>
               <div className="flex flex-wrap gap-3">
                 {tradingSkills.map(skill => (
@@ -307,9 +336,10 @@ export default function App() {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
             }}
-            className="md:col-span-2 mt-4 flex flex-wrap justify-center items-center gap-8 md:gap-16 p-10 glass-card border-white/10 bg-slate-900/20"
+            className="md:col-span-2 mt-4 flex flex-wrap justify-center items-center gap-8 md:gap-16 p-10 bento-card border-white/10 bg-slate-900/20 group"
             style={{ perspective: "1000px" }}
           >
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {[
               { name: "Python", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg", delay: "0s" },
               { name: "PyTorch", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg", delay: "0.5s" },
@@ -368,6 +398,7 @@ export default function App() {
             viewport={{ once: true }}
             className="lg:col-span-1 p-8 bg-slate-900/40 backdrop-blur-[15px] border-[0.5px] border-white/15 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] card-pulse relative overflow-hidden group flex flex-col transition-all duration-500 hover:bg-slate-900/50 hover:border-white/20 card-3d-glow"
           >
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {/* Animated Background Elements */}
             <div className="absolute -top-32 -right-32 w-64 h-64 bg-cyber-blue/20 rounded-full blur-[80px] group-hover:bg-cyber-blue/30 transition-colors duration-700 animate-pulse" />
             <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-cyber-pink/10 rounded-full blur-[80px] group-hover:bg-cyber-pink/20 transition-colors duration-700 animate-pulse delay-1000" />
@@ -453,8 +484,9 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="glass-card p-5 hover:bg-white/10 transition-all group border-white/5 hover:border-cyber-pink/30 hover:shadow-[0_0_20px_rgba(129,140,248,0.2)] relative overflow-hidden card-3d-glow-pink"
+                className="bento-card p-5 hover:bg-white/10 transition-all group border-white/5 hover:border-cyber-pink/30 hover:shadow-[0_0_20px_rgba(129,140,248,0.2)] relative overflow-hidden card-3d-glow-pink"
               >
+                <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="#818cf8" colorTo="#38bdf8" />
                 <div className="absolute inset-0 bg-gradient-to-br from-cyber-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-3">
@@ -521,8 +553,9 @@ export default function App() {
                 visible: { opacity: 1, y: 0 }
               }}
               whileHover={{ y: -10 }}
-              className="glass-card p-10 group cursor-default card-pulse relative overflow-hidden"
+              className="bento-card p-10 group cursor-default card-pulse relative overflow-hidden"
             >
+              <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className={`${item.color} mb-6 group-hover:scale-110 transition-transform relative z-10`}>
                 {item.icon}
@@ -553,8 +586,9 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="glass-card p-1 border-cyber-blue/20 overflow-hidden group flex flex-col"
+            className="bento-card p-1 border-cyber-blue/20 overflow-hidden group flex flex-col"
           >
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="h-48 overflow-hidden relative rounded-t-xl">
               <div className="absolute inset-0 bg-cyber-blue/20 mix-blend-overlay z-10" />
               <div className="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent z-10" />
@@ -599,7 +633,8 @@ export default function App() {
           </motion.div>
 
           <div className="grid gap-8">
-            <div className="glass-card p-8 border-white/5 opacity-50 grayscale">
+            <div className="bento-card p-8 border-white/5 opacity-50 grayscale group">
+              <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <h3 className="text-xl font-bold mb-2">More Projects Coming Soon</h3>
               <p className="text-sm text-white/40">The lab is currently active. Stay tuned for more agentic automation tools.</p>
             </div>
@@ -634,8 +669,9 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="glass-card p-8 md:p-12 lg:p-20 relative overflow-hidden"
+          className="bento-card p-8 md:p-12 lg:p-20 relative overflow-hidden group"
         >
+          <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="absolute top-0 right-0 p-10 opacity-10 hidden md:block">
             <Zap className="w-64 h-64 text-cyber-blue" />
           </div>
@@ -720,8 +756,9 @@ export default function App() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="relative w-full max-w-5xl h-full glass-card border-cyber-blue/30 flex flex-col overflow-hidden shadow-[0_0_50px_rgba(56,189,248,0.1)]"
+              className="relative w-full max-w-5xl h-full bento-card border-cyber-blue/30 flex flex-col overflow-hidden shadow-[0_0_50px_rgba(56,189,248,0.1)] group"
             >
+              <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               {/* Modal Header */}
               <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
                 <div className="flex items-center gap-3">
