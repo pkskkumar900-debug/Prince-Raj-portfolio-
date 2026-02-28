@@ -17,7 +17,7 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-cyber-dark text-white font-sans selection:bg-cyber-blue/30 selection:text-cyber-blue;
+    @apply bg-black text-white font-sans selection:bg-cyber-blue/30 selection:text-cyber-blue;
     overflow-x: hidden;
   }
 
@@ -62,35 +62,35 @@
   }
 
   .glass-card {
-    @apply bg-white/[0.02] backdrop-blur-2xl border border-white/[0.05] rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.6)];
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+    @apply bg-white/[0.02] backdrop-blur-2xl border border-white/[0.08] rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.6)];
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease, border-color 0.6s ease, background-color 0.6s ease;
     will-change: transform, box-shadow;
   }
 
   .bento-card {
-    @apply relative overflow-hidden bg-white/[0.02] backdrop-blur-2xl border border-white/[0.05] rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.6)];
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+    @apply relative overflow-hidden bg-white/[0.02] backdrop-blur-2xl border border-white/[0.08] rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.6)];
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease, border-color 0.6s ease, background-color 0.6s ease;
     will-change: transform, box-shadow;
   }
 
   .bento-card:hover {
-    @apply border-white/[0.1] bg-white/[0.04];
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.1);
-    transform: translateY(-4px) scale(1.01);
+    @apply border-cyber-blue/50 bg-white/[0.05];
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.1);
+    transform: translateY(-6px) scale(1.02);
   }
 
   @media (hover: hover) {
     .glass-card:hover {
-      @apply border-white/[0.1] bg-white/[0.04];
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.1);
-      transform: translateY(-4px) scale(1.01);
+      @apply border-cyber-blue/50 bg-white/[0.05];
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.1);
+      transform: translateY(-6px) scale(1.02);
     }
   }
 
   .glass-card:active, .bento-card:active {
-    @apply border-white/[0.1] bg-white/[0.04];
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.1);
-    transform: translateY(-2px) scale(0.99);
+    @apply border-cyber-blue/70 bg-white/[0.06];
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(56, 189, 248, 0.3);
+    transform: translateY(-2px) scale(0.98);
   }
 
   .btn-glow {

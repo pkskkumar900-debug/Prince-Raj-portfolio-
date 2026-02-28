@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useState } from "react";
 import { 
   Cpu, 
@@ -45,6 +45,7 @@ import CyberBackground from "./components/CyberBackground";
 import Section from "./components/Section";
 import SkillBadge from "./components/SkillBadge";
 import MouseGlow from "./components/MouseGlow";
+import SpiderCursor from "./components/SpiderCursor";
 import Hero3D from "./components/Hero3D";
 import { BorderBeam } from "./components/BorderBeam";
 
@@ -54,6 +55,27 @@ export default function App() {
   const [isPdfOpen, setIsPdfOpen] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Parallax effect for About Me card
+  const aboutMouseX = useMotionValue(0);
+  const aboutMouseY = useMotionValue(0);
+  
+  const handleAboutMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    aboutMouseX.set(x);
+    aboutMouseY.set(y);
+  };
+
+  const handleAboutMouseLeave = () => {
+    aboutMouseX.set(0);
+    aboutMouseY.set(0);
+  };
+
+  const aboutRotateX = useSpring(useTransform(aboutMouseY, [-200, 200], [15, -15]), { stiffness: 150, damping: 20 });
+  const aboutRotateY = useSpring(useTransform(aboutMouseX, [-200, 200], [-15, 15]), { stiffness: 150, damping: 20 });
+  const aboutTranslateZ = useSpring(useTransform(aboutMouseX, [-200, 200], [0, 20]), { stiffness: 150, damping: 20 });
   const technicalSkills = [
     { name: "Python", icon: <Terminal className="w-4 h-4" /> },
     { name: "AI / Machine Learning", icon: <Cpu className="w-4 h-4" /> },
@@ -72,12 +94,15 @@ export default function App() {
   ];
 
   return (
-    <div className="relative min-h-screen">
-      <CyberBackground />
-      <MouseGlow />
+    <ReactLenis root>
+      <div className="relative min-h-screen bg-black">
+        <SpiderCursor />
+        <CyberBackground />
+        <MouseGlow />
+        <Hero3D />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center bg-cyber-dark/80 backdrop-blur-xl border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center bg-black/40 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -226,19 +251,60 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="relative order-1 lg:order-2 max-w-md mx-auto w-full">
-            <div className="aspect-square bento-card p-8 flex flex-col justify-center items-center text-center group">
+          <div className="relative order-1 lg:order-2 max-w-md mx-auto w-full" style={{ perspective: "1000px" }}>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              onMouseMove={handleAboutMouseMove}
+              onMouseLeave={handleAboutMouseLeave}
+              style={{ 
+                rotateX: aboutRotateX, 
+                rotateY: aboutRotateY,
+                transformStyle: "preserve-3d"
+              }}
+              className="aspect-square bento-card p-8 flex flex-col justify-center items-center text-center group relative z-10"
+            >
               <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 to-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
-              <Bot className="w-20 h-20 text-cyber-blue mb-6 animate-bounce" />
-              <h3 className="text-2xl font-bold mb-2">The Vision</h3>
-              <p className="text-white/60">
+              
+              {/* Animated background elements */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 via-transparent to-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,0.1),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
+              
+              {/* Floating particles inside the card */}
+              <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+                {[...Array(5)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-cyber-blue rounded-full opacity-0 group-hover:opacity-50"
+                    initial={{ x: "50%", y: "50%" }}
+                    animate={{
+                      x: ["50%", `${20 + Math.random() * 60}%`, `${20 + Math.random() * 60}%`, "50%"],
+                      y: ["50%", `${20 + Math.random() * 60}%`, `${20 + Math.random() * 60}%`, "50%"],
+                    }}
+                    transition={{
+                      duration: 5 + Math.random() * 5,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                ))}
+              </div>
+
+              <motion.div style={{ translateZ: 50 }} className="relative">
+                <Bot className="w-20 h-20 text-cyber-blue mb-6 animate-bounce drop-shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
+              </motion.div>
+              
+              <motion.h3 style={{ translateZ: 30 }} className="text-2xl font-bold mb-2 relative">The Vision</motion.h3>
+              
+              <motion.p style={{ translateZ: 20 }} className="text-white/60 relative">
                 Merging technology and finance into a self-sustaining intelligent ecosystem.
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
             {/* Decorative elements */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-cyber-blue/30 z-30" />
-            <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-2 border-l-2 border-cyber-pink/30 z-30" />
+            <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-cyber-blue/30 z-0 transition-transform duration-500 group-hover:scale-110" />
+            <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-2 border-l-2 border-cyber-pink/30 z-0 transition-transform duration-500 group-hover:scale-110" />
           </div>
         </motion.div>
       </Section>
@@ -266,9 +332,10 @@ export default function App() {
         >
           <motion.div 
             variants={{
-              hidden: { opacity: 0, x: -20 },
-              visible: { opacity: 1, x: 0 }
+              hidden: { opacity: 0, scale: 0.95, y: 20 },
+              visible: { opacity: 1, scale: 1, y: 0 }
             }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="bento-card p-8 card-pulse relative overflow-hidden group border-cyber-blue/30 hover:border-cyber-blue/60 transition-colors"
           >
             <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -292,9 +359,10 @@ export default function App() {
 
           <motion.div 
             variants={{
-              hidden: { opacity: 0, x: 20 },
-              visible: { opacity: 1, x: 0 }
+              hidden: { opacity: 0, scale: 0.95, y: 20 },
+              visible: { opacity: 1, scale: 1, y: 0 }
             }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="bento-card p-8 card-pulse relative overflow-hidden group border-cyber-pink/30 hover:border-cyber-pink/60 transition-colors"
           >
             <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="#818cf8" colorTo="#38bdf8" />
@@ -333,10 +401,11 @@ export default function App() {
           {/* 3D Animated Tech Logos */}
           <motion.div
             variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 }
+              hidden: { opacity: 0, scale: 0.95, y: 20 },
+              visible: { opacity: 1, scale: 1, y: 0 }
             }}
-            className="md:col-span-2 mt-4 flex flex-wrap justify-center items-center gap-8 md:gap-16 p-10 bento-card border-white/10 bg-slate-900/20 group"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="md:col-span-2 mt-4 flex flex-wrap justify-center items-center gap-8 md:gap-16 p-10 bento-card !overflow-visible border-white/10 bg-slate-900/20 group"
             style={{ perspective: "1000px" }}
           >
             <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -345,10 +414,16 @@ export default function App() {
               { name: "PyTorch", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg", delay: "0.5s" },
               { name: "TensorFlow", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg", delay: "1s" },
               { name: "React", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg", delay: "1.5s" },
-              { name: "Docker", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg", delay: "2s" },
-              { name: "AWS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", delay: "2.5s" },
-              { name: "PostgreSQL", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg", delay: "3s" },
-              { name: "C++", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg", delay: "3.5s" }
+              { name: "Node.js", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg", delay: "2s" },
+              { name: "TypeScript", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg", delay: "2.5s" },
+              { name: "Tailwind CSS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", delay: "3s" },
+              { name: "Docker", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg", delay: "3.5s" },
+              { name: "AWS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", delay: "4s" },
+              { name: "PostgreSQL", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg", delay: "4.5s" },
+              { name: "MongoDB", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg", delay: "5s" },
+              { name: "Git", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg", delay: "5.5s" },
+              { name: "Next.js", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg", delay: "6s" },
+              { name: "C++", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg", delay: "6.5s" }
             ].map((logo, i) => (
               <div 
                 key={logo.name} 
@@ -480,10 +555,10 @@ export default function App() {
                 href={cert.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
+                transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
                 className="bento-card p-5 hover:bg-white/10 transition-all group border-white/5 hover:border-cyber-pink/30 hover:shadow-[0_0_20px_rgba(129,140,248,0.2)] relative overflow-hidden card-3d-glow-pink"
               >
                 <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="#818cf8" colorTo="#38bdf8" />
@@ -549,9 +624,10 @@ export default function App() {
             <motion.div
               key={i}
               variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0 }
+                hidden: { opacity: 0, scale: 0.9, y: 30 },
+                visible: { opacity: 1, scale: 1, y: 0 }
               }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               whileHover={{ y: -10 }}
               className="bento-card p-10 group cursor-default card-pulse relative overflow-hidden"
             >
@@ -583,9 +659,10 @@ export default function App() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="bento-card p-1 border-cyber-blue/20 overflow-hidden group flex flex-col"
           >
             <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -595,7 +672,7 @@ export default function App() {
               <img 
                 src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?fit=crop&w=800&h=400" 
                 alt="PrinAi Glass Prototype" 
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 grayscale group-hover:grayscale-0"
+                className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700 grayscale group-hover:grayscale-0"
               />
             </div>
             <div className="p-8 flex-1 flex flex-col relative z-20 -mt-12">
@@ -633,11 +710,17 @@ export default function App() {
           </motion.div>
 
           <div className="grid gap-8">
-            <div className="bento-card p-8 border-white/5 opacity-50 grayscale group">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="bento-card p-8 border-white/5 opacity-50 grayscale group"
+            >
               <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <h3 className="text-xl font-bold mb-2">More Projects Coming Soon</h3>
               <p className="text-sm text-white/40">The lab is currently active. Stay tuned for more agentic automation tools.</p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </Section>
@@ -665,8 +748,8 @@ export default function App() {
       {/* Contact Section */}
       <Section id="contact" className="pb-40">
         <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9, y: 50 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="bento-card p-8 md:p-12 lg:p-20 relative overflow-hidden group"
@@ -977,6 +1060,7 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+      </div>
+    </ReactLenis>
   );
 }
