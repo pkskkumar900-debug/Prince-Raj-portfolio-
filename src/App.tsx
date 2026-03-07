@@ -129,7 +129,7 @@ export default function App() {
         
         {/* Desktop Menu */}
         <div className="hidden lg:flex gap-8 text-sm font-medium text-white/60">
-          {["About", "Skills", "Academic", "What I Do", "Projects", "Vision", "Contact"].map((item) => (
+          {["About", "Skills", "Trading", "Academic", "What I Do", "Projects", "Vision", "Contact"].map((item) => (
             <a 
               key={item} 
               href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
@@ -184,7 +184,7 @@ export default function App() {
               className="fixed inset-0 top-[72px] bg-cyber-dark/95 backdrop-blur-xl z-40 flex flex-col items-center pt-10 border-b border-white/10 lg:hidden"
             >
               <div className="flex flex-col gap-6 text-center text-lg font-medium text-white/80 w-full px-6">
-                {["About", "Skills", "Academic", "What I Do", "Projects", "Vision", "Contact"].map((item) => (
+                {["About", "Skills", "Trading", "Academic", "What I Do", "Projects", "Vision", "Contact"].map((item) => (
                   <a 
                     key={item} 
                     href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
