@@ -65,7 +65,7 @@ export default function CyberBackground() {
               left: p.left,
               top: p.top,
               opacity: p.opacity,
-              boxShadow: `0 0 ${p.size * 2}px rgba(56,189,248,0.8)`
+              boxShadow: `0 0 ${p.size * 2}px rgba(var(--rgb-cyber-blue),0.8)`
             }}
           />
         ))}
@@ -85,7 +85,7 @@ export default function CyberBackground() {
               left: p.left,
               top: p.top,
               opacity: p.opacity,
-              boxShadow: `0 0 ${p.size * 2}px rgba(129,140,248,0.8)`
+              boxShadow: `0 0 ${p.size * 2}px rgba(var(--rgb-cyber-pink),0.8)`
             }}
           />
         ))}
@@ -129,7 +129,7 @@ export default function CyberBackground() {
       
       {/* Perspective Overlay for 3D effect */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-90" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#000_80%)] opacity-90" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-black)_80%)] opacity-90" />
 
       {/* Neon Glowing Water Bubbles */}
       {bubbles.map((bubble) => (

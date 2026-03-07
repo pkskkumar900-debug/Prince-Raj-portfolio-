@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Cpu, 
   TrendingUp, 
@@ -39,7 +39,9 @@ import {
   Brain,
   Database,
   Code2,
-  Binary
+  Binary,
+  Sun,
+  Moon
 } from "lucide-react";
 import CyberBackground from "./components/CyberBackground";
 import Section from "./components/Section";
@@ -48,6 +50,7 @@ import MouseGlow from "./components/MouseGlow";
 import SpiderCursor from "./components/SpiderCursor";
 import Hero3D from "./components/Hero3D";
 import { BorderBeam } from "./components/BorderBeam";
+import TradingViewWidget from "./components/TradingViewWidget";
 
 import { ReactLenis } from 'lenis/react';
 
@@ -55,6 +58,19 @@ export default function App() {
   const [isPdfOpen, setIsPdfOpen] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   // Parallax effect for About Me card
   const aboutMouseX = useMotionValue(0);
@@ -124,7 +140,14 @@ export default function App() {
           ))}
         </div>
         
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center gap-4">
+          <button 
+            onClick={toggleTheme}
+            className="p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
+            aria-label="Toggle Theme"
+          >
+            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
           <motion.a
             href="#contact"
             whileTap={{ scale: 0.95 }}
@@ -135,12 +158,21 @@ export default function App() {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button 
-          className="lg:hidden z-50 text-white p-2"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center gap-4 lg:hidden z-50">
+          <button 
+            onClick={toggleTheme}
+            className="p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
+            aria-label="Toggle Theme"
+          >
+            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+          <button 
+            className="text-white p-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
 
         {/* Mobile Menu Overlay */}
         <AnimatePresence>
@@ -176,57 +208,65 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl"
-        >
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyber-blue/10 border border-cyber-blue/20 text-cyber-blue text-xs font-bold tracking-widest uppercase mb-6"
+      <section className="pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          {/* Main Hero Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="md:col-span-12 lg:col-span-12 bento-card p-10 lg:p-16 flex flex-col justify-center relative overflow-hidden group"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-blue opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyber-blue"></span>
-            </span>
-            Available for new projects
-          </motion.div>
-          
-          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-[0.9] tracking-tighter">
-            🚀 Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-pink">Prince.</span><br />
-            Building the future with AI.
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-white/60 max-w-2xl font-light leading-relaxed mb-10">
-            Building intelligent systems, trading algorithms, and automation frameworks to simplify real-world problems.
-          </p>
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            
+            <div className="relative z-10">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyber-blue/10 border border-cyber-blue/20 text-cyber-blue text-xs font-bold tracking-widest uppercase mb-8"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-blue opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyber-blue"></span>
+                </span>
+                Available for new projects
+              </motion.div>
+              
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-[0.9] tracking-tighter">
+                🚀 Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-pink">Prince.</span><br />
+                Building the future with AI.
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-white/60 max-w-2xl font-light leading-relaxed mb-10">
+                Building intelligent systems, trading algorithms, and automation frameworks to simplify real-world problems.
+              </p>
 
-          <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto mt-4">
-            <a
-              href="#projects"
-              className="px-8 py-4 bg-cyber-blue text-cyber-dark font-black rounded-xl flex items-center justify-center gap-2 group w-full sm:w-auto btn-premium"
-            >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shimmer" />
-              <span className="relative flex items-center gap-2">
-                VIEW PROJECTS
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </a>
-            <a
-              href="#skills"
-              className="px-8 py-4 bg-transparent border border-cyber-pink/50 text-white font-bold rounded-xl flex justify-center items-center w-full sm:w-auto group btn-premium-pink"
-            >
-              <span className="absolute inset-0 w-full h-full bg-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="relative z-10 flex items-center gap-2 tracking-wide">
-                MY STRATEGIES
-              </span>
-            </a>
-          </div>
-        </motion.div>
+              <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto mt-4">
+                <a
+                  href="#projects"
+                  className="px-8 py-4 bg-cyber-blue text-cyber-dark font-black rounded-xl flex items-center justify-center gap-2 group w-full sm:w-auto btn-premium"
+                >
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-shimmer" />
+                  <span className="relative flex items-center gap-2">
+                    VIEW PROJECTS
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </a>
+                <a
+                  href="#skills"
+                  className="px-8 py-4 bg-transparent border border-cyber-pink/50 text-white font-bold rounded-xl flex justify-center items-center w-full sm:w-auto group btn-premium-pink"
+                >
+                  <span className="absolute inset-0 w-full h-full bg-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10 flex items-center gap-2 tracking-wide">
+                    MY STRATEGIES
+                  </span>
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Intro Section */}
@@ -238,17 +278,21 @@ export default function App() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="grid lg:grid-cols-2 gap-12 items-center"
         >
-          <div className="order-2 lg:order-1">
-            <h2 className="text-4xl font-bold mb-6 flex items-center gap-3">
-              <span className="text-cyber-blue">01.</span> ABOUT ME
-            </h2>
-            <div className="space-y-6 text-lg text-white/70 leading-relaxed">
-              <p>
-                Hi, I'm <span className="text-white font-semibold">Prince Raj</span>. I bridge the gap between Artificial Intelligence and Financial Markets.
-              </p>
-              <p>
-                As an AI Developer and Professional Trader, I build agentic automation tools, intelligent personal assistants, and data-driven trading strategies. Currently advancing my expertise through a <span className="text-cyber-blue font-mono">BS in CSDA</span>, my mission is to develop real-world tech solutions that save time, automate decisions, and generate measurable impact.
-              </p>
+          <div className="order-2 lg:order-1 bento-card p-10 lg:p-12 relative overflow-hidden group">
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="var(--color-cyber-pink)" colorTo="var(--color-cyber-blue)" />
+            <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative z-10">
+              <h2 className="text-4xl font-bold mb-6 flex items-center gap-3">
+                <span className="text-cyber-blue">01.</span> ABOUT ME
+              </h2>
+              <div className="space-y-6 text-lg text-white/70 leading-relaxed">
+                <p>
+                  Hi, I'm <span className="text-white font-semibold">Prince Raj</span>. I bridge the gap between Artificial Intelligence and Financial Markets.
+                </p>
+                <p>
+                  As an AI Developer and Professional Trader, I build agentic automation tools, intelligent personal assistants, and data-driven trading strategies. Currently advancing my expertise through a <span className="text-cyber-blue font-mono">BS in CSDA</span>, my mission is to develop real-world tech solutions that save time, automate decisions, and generate measurable impact.
+                </p>
+              </div>
             </div>
           </div>
           <div className="relative order-1 lg:order-2 max-w-md mx-auto w-full" style={{ perspective: "1000px" }}>
@@ -270,7 +314,7 @@ export default function App() {
               
               {/* Animated background elements */}
               <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue/10 via-transparent to-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,0.1),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(var(--rgb-cyber-blue),0.1),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
               
               {/* Floating particles inside the card */}
               <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
@@ -365,7 +409,7 @@ export default function App() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="bento-card p-8 card-pulse relative overflow-hidden group border-cyber-pink/30 hover:border-cyber-pink/60 transition-colors"
           >
-            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="#818cf8" colorTo="#38bdf8" />
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="var(--color-cyber-pink)" colorTo="var(--color-cyber-blue)" />
             <div className="absolute -top-20 -left-20 w-40 h-40 bg-cyber-pink/20 rounded-full blur-3xl group-hover:bg-cyber-pink/40 transition-colors duration-500 animate-pulse" />
             <div className="absolute inset-0 bg-gradient-to-bl from-cyber-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
@@ -450,6 +494,34 @@ export default function App() {
               </div>
             ))}
           </motion.div>
+        </motion.div>
+      </Section>
+
+      {/* Live Trading Setup Section */}
+      <Section id="trading" className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-cyber-pink/5 blur-[100px] -z-10" />
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl font-bold mb-12"
+        >
+          <span className="text-cyber-pink">02.5.</span> LIVE TRADING SETUP
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="bento-card p-4 md:p-8 relative overflow-hidden group w-full"
+        >
+          <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="var(--color-cyber-pink)" colorTo="var(--color-cyber-blue)" />
+          
+          <div className="w-full h-[450px] md:h-[600px] rounded-xl overflow-hidden border border-white/10 bg-[#0F0F0F]">
+            <TradingViewWidget />
+          </div>
         </motion.div>
       </Section>
 
@@ -559,9 +631,9 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
-                className="bento-card p-5 hover:bg-white/10 transition-all group border-white/5 hover:border-cyber-pink/30 hover:shadow-[0_0_20px_rgba(129,140,248,0.2)] relative overflow-hidden card-3d-glow-pink"
+                className="bento-card p-5 hover:bg-white/10 transition-all group border-white/5 hover:border-cyber-pink/30 hover:shadow-[0_0_20px_rgba(var(--rgb-cyber-pink),0.2)] relative overflow-hidden card-3d-glow-pink"
               >
-                <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="#818cf8" colorTo="#38bdf8" />
+                <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="var(--color-cyber-pink)" colorTo="var(--color-cyber-blue)" />
                 <div className="absolute inset-0 bg-gradient-to-br from-cyber-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-3">
@@ -599,26 +671,29 @@ export default function App() {
           variants={{
             visible: { transition: { staggerChildren: 0.2 } }
           }}
-          className="grid md:grid-cols-3 gap-8"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {[
             {
               icon: <Bot className="w-10 h-10" />,
               title: "AI Development",
               desc: "Building smart assistants, automation tools, and intelligent systems.",
-              color: "text-cyber-blue"
+              color: "text-cyber-blue",
+              span: "md:col-span-2 lg:col-span-2"
             },
             {
               icon: <BarChart3 className="w-10 h-10" />,
               title: "Trading",
               desc: "Designing strategies and analyzing markets professionally.",
-              color: "text-cyber-pink"
+              color: "text-cyber-pink",
+              span: "md:col-span-1 lg:col-span-1"
             },
             {
               icon: <Settings className="w-10 h-10" />,
               title: "Automation",
               desc: "Creating systems that save time and scale operations.",
-              color: "text-emerald-400"
+              color: "text-emerald-400",
+              span: "md:col-span-1 lg:col-span-3"
             }
           ].map((item, i) => (
             <motion.div
@@ -629,7 +704,7 @@ export default function App() {
               }}
               transition={{ duration: 0.5, ease: "easeOut" }}
               whileHover={{ y: -10 }}
-              className="bento-card p-10 group cursor-default card-pulse relative overflow-hidden"
+              className={`bento-card p-10 group cursor-default card-pulse relative overflow-hidden ${item.span}`}
             >
               <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -657,13 +732,13 @@ export default function App() {
           <span className="text-cyber-pink">05.</span> FEATURED PROJECTS
         </motion.h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="bento-card p-1 border-cyber-blue/20 overflow-hidden group flex flex-col"
+            className="lg:col-span-2 bento-card p-1 border-cyber-blue/20 overflow-hidden group flex flex-col"
           >
             <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="h-48 overflow-hidden relative rounded-t-xl">
@@ -709,19 +784,20 @@ export default function App() {
             </div>
           </motion.div>
 
-          <div className="grid gap-8">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="bento-card p-8 border-white/5 opacity-50 grayscale group"
-            >
-              <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <h3 className="text-xl font-bold mb-2">More Projects Coming Soon</h3>
-              <p className="text-sm text-white/40">The lab is currently active. Stay tuned for more agentic automation tools.</p>
-            </motion.div>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-1 bento-card p-8 border-white/5 opacity-50 grayscale group flex flex-col justify-center items-center text-center"
+          >
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="p-4 rounded-full bg-white/5 mb-6 group-hover:scale-110 transition-transform">
+              <Code2 className="w-8 h-8 text-white/40" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">More Projects Coming Soon</h3>
+            <p className="text-sm text-white/40">The lab is currently active. Stay tuned for more agentic automation tools.</p>
+          </motion.div>
         </div>
       </Section>
 
@@ -747,20 +823,20 @@ export default function App() {
 
       {/* Contact Section */}
       <Section id="contact" className="pb-40">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9, y: 50 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bento-card p-8 md:p-12 lg:p-20 relative overflow-hidden group"
-        >
-          <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="absolute top-0 right-0 p-10 opacity-10 hidden md:block">
-            <Zap className="w-64 h-64 text-cyber-blue" />
-          </div>
-          
-          <div className="grid lg:grid-cols-2 gap-12 relative z-10">
-            <div>
+        <div className="grid lg:grid-cols-2 gap-6">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 50 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="bento-card p-8 md:p-12 relative overflow-hidden group"
+          >
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute top-0 right-0 p-10 opacity-10 hidden md:block">
+              <Zap className="w-64 h-64 text-cyber-blue" />
+            </div>
+            
+            <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl font-black mb-6">LET'S BUILD THE FUTURE.</h2>
               <p className="text-white/60 text-lg mb-10">
                 Have a project in mind or want to discuss trading strategies? Drop me a message.
@@ -783,7 +859,7 @@ export default function App() {
                   <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-white/5 flex items-center justify-center">
                     <MapPin className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
-                  Indian
+                  India
                 </div>
                 <div className="flex items-center gap-4 text-lg md:text-xl">
                   <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full bg-white/5 flex items-center justify-center">
@@ -792,22 +868,41 @@ export default function App() {
                   Website: Coming Soon
                 </div>
               </div>
-              
-              <div className="mt-8">
-                <a 
-                  href="https://wa.me/918252995548" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 px-6 md:px-8 py-4 bg-cyber-dark border border-[#25D366]/50 text-[#25D366] font-bold rounded-xl hover:bg-[#25D366]/10 transition-all shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_40px_rgba(37,211,102,0.8)] w-full sm:w-auto text-sm md:text-base relative overflow-hidden group whatsapp-pulse"
-                >
-                  <div className="absolute inset-0 bg-[#25D366]/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
-                  <span className="relative z-10">CHAT ON WHATSAPP</span>
-                </a>
-              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 50 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="bento-card p-8 md:p-12 relative overflow-hidden group flex flex-col justify-center items-center text-center"
+          >
+            <BorderBeam className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" colorFrom="var(--color-cyber-pink)" colorTo="var(--color-cyber-blue)" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(var(--rgb-cyber-pink),0.1),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
+            
+            <div className="relative z-10 w-full flex flex-col items-center">
+              <MessageCircle className="w-16 h-16 text-cyber-pink mb-6 animate-bounce drop-shadow-[0_0_15px_rgba(var(--rgb-cyber-pink),0.5)]" />
+              <h3 className="text-3xl font-bold mb-4">Fastest Response</h3>
+              <p className="text-white/60 mb-8 max-w-sm">
+                For urgent inquiries or quick discussions, reach out directly on WhatsApp.
+              </p>
+              <a 
+                href="https://wa.me/918252995548" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 px-6 md:px-8 py-4 bg-cyber-dark border border-[#25D366]/50 text-[#25D366] font-bold rounded-xl hover:bg-[#25D366]/10 transition-all shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_40px_rgba(37,211,102,0.8)] w-full sm:w-auto text-sm md:text-base relative overflow-hidden group whatsapp-pulse"
+              >
+                <div className="absolute inset-0 bg-[#25D366]/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <MessageCircle className="w-6 h-6 md:w-8 md:h-8" />
+                <span className="flex flex-col items-start">
+                  <span className="text-xs md:text-sm font-normal opacity-80 uppercase tracking-widest">Chat directly on</span>
+                  <span className="text-lg md:text-xl tracking-wide">WhatsApp</span>
+                </span>
+              </a>
+            </div>
+          </motion.div>
+        </div>
       </Section>
 
       {/* Footer */}

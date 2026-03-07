@@ -13,8 +13,23 @@
 }
 
 @layer base {
+  :root {
+    --rgb-cyber-blue: 56, 189, 248;
+    --rgb-cyber-pink: 129, 140, 248;
+  }
   html {
     scroll-behavior: smooth;
+  }
+  html.light {
+    --color-black: #f8fafc;
+    --color-white: #0f172a;
+    --color-cyber-blue: #0284c7;
+    --color-cyber-pink: #6366f1;
+    --color-cyber-dark: #ffffff;
+    --color-cyber-gray: #f1f5f9;
+    --color-slate-900: #e2e8f0;
+    --rgb-cyber-blue: 2, 132, 199;
+    --rgb-cyber-pink: 99, 102, 241;
   }
   body {
     @apply bg-black text-white font-sans selection:bg-cyber-blue/30 selection:text-cyber-blue;
@@ -37,7 +52,7 @@
 
 @layer utilities {
   .cyber-grid {
-    background-image: linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    background-image: linear-gradient(to right, rgba(var(--rgb-cyber-blue), 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
     background-size: 50px 50px;
     mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
@@ -54,11 +69,11 @@
   }
 
   .text-glow {
-    text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    text-shadow: 0 0 20px rgba(var(--rgb-cyber-blue), 0.3);
   }
 
   .border-glow {
-    box-shadow: 0 0 30px rgba(56, 189, 248, 0.1);
+    box-shadow: 0 0 30px rgba(var(--rgb-cyber-blue), 0.1);
   }
 
   .glass-card {
@@ -75,32 +90,32 @@
 
   .bento-card:hover {
     @apply border-cyber-blue/50 bg-white/[0.05];
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--rgb-cyber-blue), 0.25), inset 0 0 20px rgba(var(--rgb-cyber-blue), 0.1);
     transform: translateY(-6px) scale(1.02);
   }
 
   @media (hover: hover) {
     .glass-card:hover {
       @apply border-cyber-blue/50 bg-white/[0.05];
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.1);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--rgb-cyber-blue), 0.25), inset 0 0 20px rgba(var(--rgb-cyber-blue), 0.1);
       transform: translateY(-6px) scale(1.02);
     }
   }
 
   .glass-card:active, .bento-card:active {
     @apply border-cyber-blue/70 bg-white/[0.06];
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(var(--rgb-cyber-blue), 0.3);
     transform: translateY(-2px) scale(0.98);
   }
 
   .btn-glow {
     @apply relative overflow-hidden;
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+    box-shadow: 0 0 15px rgba(var(--rgb-cyber-blue), 0.4);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
   
   .btn-glow:hover {
-    box-shadow: 0 0 25px rgba(0, 242, 255, 0.7);
+    box-shadow: 0 0 25px rgba(var(--rgb-cyber-blue), 0.7);
   }
 
   @keyframes shimmer {
@@ -114,10 +129,10 @@
 
   @keyframes pulseGlow {
     0%, 100% {
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.2);
+      box-shadow: 0 0 15px rgba(var(--rgb-cyber-blue), 0.4), inset 0 0 10px rgba(var(--rgb-cyber-blue), 0.2);
     }
     50% {
-      box-shadow: 0 0 30px rgba(56, 189, 248, 0.8), inset 0 0 20px rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 30px rgba(var(--rgb-cyber-blue), 0.8), inset 0 0 20px rgba(var(--rgb-cyber-blue), 0.4);
     }
   }
 
@@ -129,15 +144,15 @@
   
   .btn-premium:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 0 40px rgba(56, 189, 248, 1), inset 0 0 25px rgba(56, 189, 248, 0.6);
+    box-shadow: 0 0 40px rgba(var(--rgb-cyber-blue), 1), inset 0 0 25px rgba(var(--rgb-cyber-blue), 0.6);
   }
 
   @keyframes pulseGlowPink {
     0%, 100% {
-      box-shadow: 0 0 15px rgba(129, 140, 248, 0.2), inset 0 0 10px rgba(129, 140, 248, 0.1);
+      box-shadow: 0 0 15px rgba(var(--rgb-cyber-pink), 0.2), inset 0 0 10px rgba(var(--rgb-cyber-pink), 0.1);
     }
     50% {
-      box-shadow: 0 0 25px rgba(129, 140, 248, 0.5), inset 0 0 15px rgba(129, 140, 248, 0.3);
+      box-shadow: 0 0 25px rgba(var(--rgb-cyber-pink), 0.5), inset 0 0 15px rgba(var(--rgb-cyber-pink), 0.3);
     }
   }
 
@@ -149,7 +164,7 @@
 
   .btn-premium-pink:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 0 35px rgba(129, 140, 248, 0.8), inset 0 0 20px rgba(129, 140, 248, 0.5);
+    box-shadow: 0 0 35px rgba(var(--rgb-cyber-pink), 0.8), inset 0 0 20px rgba(var(--rgb-cyber-pink), 0.5);
   }
 
   .whatsapp-pulse {
@@ -163,13 +178,13 @@
 
   @keyframes cardPulse {
     0% {
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.05);
+      box-shadow: 0 0 20px rgba(var(--rgb-cyber-blue), 0.05);
     }
     50% {
-      box-shadow: 0 0 40px rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 40px rgba(var(--rgb-cyber-blue), 0.15);
     }
     100% {
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.05);
+      box-shadow: 0 0 20px rgba(var(--rgb-cyber-blue), 0.05);
     }
   }
 
@@ -205,14 +220,14 @@
   }
 
   .logo-3d {
-    filter: drop-shadow(0px 10px 15px rgba(56, 189, 248, 0.3)) drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.1));
+    filter: drop-shadow(0px 10px 15px rgba(var(--rgb-cyber-blue), 0.3)) drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.1));
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
     will-change: transform, filter;
   }
 
   .logo-3d:hover {
     transform: scale(1.15) translateZ(30px);
-    filter: drop-shadow(0px 15px 25px rgba(56, 189, 248, 0.5)) drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.3));
+    filter: drop-shadow(0px 15px 25px rgba(var(--rgb-cyber-blue), 0.5)) drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.3));
   }
 
   .card-3d-glow {
@@ -223,8 +238,8 @@
 
   .card-3d-glow:hover {
     transform: translateY(-10px) rotateX(6deg) rotateY(-6deg) scale(1.02);
-    box-shadow: -15px 15px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(56, 189, 248, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.1);
-    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: -15px 15px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(var(--rgb-cyber-blue), 0.4), inset 0 0 20px rgba(var(--rgb-cyber-blue), 0.1);
+    border-color: rgba(var(--rgb-cyber-blue), 0.5);
   }
 
   .card-3d-glow-pink {
@@ -235,8 +250,8 @@
 
   .card-3d-glow-pink:hover {
     transform: translateY(-8px) rotateX(5deg) rotateY(5deg) scale(1.02);
-    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(129, 140, 248, 0.4), inset 0 0 20px rgba(129, 140, 248, 0.1);
-    border-color: rgba(129, 140, 248, 0.5);
+    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(var(--rgb-cyber-pink), 0.4), inset 0 0 20px rgba(var(--rgb-cyber-pink), 0.1);
+    border-color: rgba(var(--rgb-cyber-pink), 0.5);
   }
 
   @keyframes heartPulse {
