@@ -36,7 +36,6 @@ function TradingViewWidget() {
         "watchlist": [
           "BITSTAMP:BTCUSD",
           "OANDA:XAGUSD",
-          "NSE:NIFTY",
           "TICKMILL:EURUSD",
           "NASDAQ:NVDA",
           "NASDAQ:MSFT"
